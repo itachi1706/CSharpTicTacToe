@@ -10,6 +10,11 @@ namespace TicTacToe
     {
         private static String[,] gameBoardCheck = null;
 
+        public static Boolean hasDrawn(int value)
+        {
+            return value >= 9;
+        }
+
         public static Boolean hasWon(String value, String[,] gameBoard)
         {
             Boolean winValue = false;
