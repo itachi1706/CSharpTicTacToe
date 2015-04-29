@@ -29,6 +29,8 @@ namespace TicTacToe
             InitializeComponent();
             LoggingClass.initLog();
 
+            MaximizeBox = false;
+
             InitializeGame();
             DisableGame();
         }
