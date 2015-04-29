@@ -14,11 +14,12 @@ namespace TicTacToe
 {
     public partial class Form1 : Form
     {
-        //Game Start (0 - Nope, 1 - Start, 2 - Need Reset)
+        //Game Start (0 - Nope, 1 - Start, 2 - Need Reset, 3 - To Be Reset)
         private static int gameStart = 1;
         private static String currentPlayer = Values.EMPTY;
         private static int turnNo = -1;
         private static int lastRow = -1, lastCol = -1;
+        private static int timerDuration = 0;
 
         public static String[,] gameBoard = new String[3,3];
 
@@ -54,6 +55,8 @@ namespace TicTacToe
         {
             LoggingClass.logInfo("SYSTEM", "Game Area Disabled");
             gameStart = 0;
+            timerDuration = 0;
+            countUpTimerLabel.Text = "Time Taken: - seconds";
             grpGamePlay.Enabled = false;
             btnReset.Enabled = false;
             newGameToolStripMenuItem.Enabled = false;
@@ -75,12 +78,14 @@ namespace TicTacToe
             if (AlgorithmCheck.hasWon(Values.X, gameBoard))
             {
                 LoggingClass.logInfo("GAME-WIN", "X WON");
+                gameStart = 3;
                 MessageBox.Show("X has won the game!", "X Won!");
                 promptReset();
             }
             else if (AlgorithmCheck.hasWon(Values.O, gameBoard))
             {
                 LoggingClass.logInfo("GAME-WIN", "O WON");
+                gameStart = 3;
                 MessageBox.Show("O has won the game!", "O Won!");
                 promptReset();
             }
@@ -124,6 +129,7 @@ namespace TicTacToe
                     }
                     else
                     {
+                        gameStart = 3;
                         MessageBox.Show("This game is a draw!", "Game Drawn");
                         LoggingClass.logInfo("SYSTEM", "Game Drawn");
                         promptReset();
@@ -145,6 +151,7 @@ namespace TicTacToe
                 //Check drawn
                 if (AlgorithmCheck.hasDrawn(turnNo))
                 {
+                    gameStart = 3;
                     MessageBox.Show("This game is a draw!", "Game Drawn");
                     LoggingClass.logInfo("SYSTEM", "Game Drawn");
                     promptReset();
@@ -282,6 +289,7 @@ namespace TicTacToe
 
         private void btnStart_Click(object sender, EventArgs e)
         {
+            countUpTimer.Start();
             if (isSinglePlayer())
             {
                 //Single Player
@@ -373,6 +381,26 @@ namespace TicTacToe
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void countUpTimer_Tick(object sender, EventArgs e)
+        {
+            if (gameStart == 1)
+            {
+                // Display the new time left 
+                // by updating the Time Left label.
+                timerDuration = timerDuration + 1;
+            }
+            else if (gameStart == 3)
+            {
+                // In case of reset
+                countUpTimer.Stop();
+            }
+            else
+            {
+                timerDuration = 0;
+            }
+            countUpTimerLabel.Text = "Time Taken: " + timerDuration + " seconds";
         }
 
 

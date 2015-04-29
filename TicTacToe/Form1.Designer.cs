@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.r11 = new System.Windows.Forms.Button();
             this.r12 = new System.Windows.Forms.Button();
@@ -51,6 +52,8 @@
             this.groupSelect = new System.Windows.Forms.GroupBox();
             this.grpGamePlay = new System.Windows.Forms.GroupBox();
             this.lblInstructions = new System.Windows.Forms.Label();
+            this.countUpTimer = new System.Windows.Forms.Timer(this.components);
+            this.countUpTimerLabel = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.groupSelect.SuspendLayout();
             this.grpGamePlay.SuspendLayout();
@@ -148,7 +151,7 @@
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(65, 226);
+            this.btnStart.Location = new System.Drawing.Point(65, 236);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(75, 23);
             this.btnStart.TabIndex = 9;
@@ -158,7 +161,7 @@
             // 
             // btnReset
             // 
-            this.btnReset.Location = new System.Drawing.Point(169, 226);
+            this.btnReset.Location = new System.Drawing.Point(169, 236);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(75, 23);
             this.btnReset.TabIndex = 10;
@@ -274,11 +277,25 @@
             this.lblInstructions.TabIndex = 16;
             this.lblInstructions.Text = "Press Start Game to Start";
             // 
+            // countUpTimer
+            // 
+            this.countUpTimer.Tick += new System.EventHandler(this.countUpTimer_Tick);
+            // 
+            // countUpTimerLabel
+            // 
+            this.countUpTimerLabel.AutoSize = true;
+            this.countUpTimerLabel.Location = new System.Drawing.Point(37, 212);
+            this.countUpTimerLabel.Name = "countUpTimerLabel";
+            this.countUpTimerLabel.Size = new System.Drawing.Size(116, 13);
+            this.countUpTimerLabel.TabIndex = 17;
+            this.countUpTimerLabel.Text = "Time Taken: - seconds";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(323, 261);
+            this.ClientSize = new System.Drawing.Size(323, 278);
+            this.Controls.Add(this.countUpTimerLabel);
             this.Controls.Add(this.lblInstructions);
             this.Controls.Add(this.grpGamePlay);
             this.Controls.Add(this.groupSelect);
@@ -323,6 +340,8 @@
         private System.Windows.Forms.Label lblInstructions;
         private System.Windows.Forms.ToolStripMenuItem debugToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewGameLogToolStripMenuItem;
+        private System.Windows.Forms.Timer countUpTimer;
+        private System.Windows.Forms.Label countUpTimerLabel;
     }
 }
 
