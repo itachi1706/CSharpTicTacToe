@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlgorithmCheck.cs" />
+    <Compile Include="ComputerAI.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

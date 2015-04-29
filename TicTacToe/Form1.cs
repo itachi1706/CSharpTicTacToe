@@ -150,6 +150,11 @@ namespace TicTacToe
             }
         }
 
+        public static void UpdateAI(int row, int col)
+        {
+            gameBoard[row, col] = Values.O;
+        }
+
         private void updateButtons()
         {
             r11.Text = gameBoard[0, 0];
@@ -169,6 +174,11 @@ namespace TicTacToe
                 return false;
             }
             return true;
+        }
+
+        public static void throwError(String errorMsg)
+        {
+            MessageBox.Show(errorMsg, "ERROR");
         }
 
 
