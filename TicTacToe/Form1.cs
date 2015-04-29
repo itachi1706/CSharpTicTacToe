@@ -63,12 +63,12 @@ namespace TicTacToe
         {
             if (AlgorithmCheck.hasWon(Values.X, gameBoard))
             {
-                MessageBox.Show("X has won the game!");
+                MessageBox.Show("X has won the game!", "X Won!");
                 promptReset();
             }
             else if (AlgorithmCheck.hasWon(Values.O, gameBoard))
             {
-                MessageBox.Show("Y has won the game!");
+                MessageBox.Show("O has won the game!", "O Won!");
                 promptReset();
             }
 
@@ -95,6 +95,13 @@ namespace TicTacToe
                 else
                     currentPlayer = Values.X;
                 updateTurnDisplay();
+
+                //Check drawn
+                if (AlgorithmCheck.hasDrawn(turnNo))
+                {
+                    MessageBox.Show("This game is a draw!", "Game Drawn");
+                    promptReset();
+                }
             }
         }
 
