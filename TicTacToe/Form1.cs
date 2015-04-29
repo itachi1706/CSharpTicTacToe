@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -16,6 +17,8 @@ namespace TicTacToe
         private int gameStart = 1;
         private String currentPlayer = Values.EMPTY;
         private int turnNo = -1;
+        private int lastRow = -1, lastCol = -1;
+        private ArrayList logList;
 
         public static String[,] gameBoard = new String[3,3];
 
@@ -30,6 +33,7 @@ namespace TicTacToe
         }
 
         private void InitializeGame(){
+            logInfo("SYSTEM", "Init Game");
             r11.Text = r12.Text
                 = r21.Text = r22.Text
                 = r31.Text = r32.Text
@@ -40,10 +44,12 @@ namespace TicTacToe
                 = gameBoard[1, 0] = gameBoard[1, 1] = gameBoard[1, 2]
                 = gameBoard[2, 0] = gameBoard[2, 1] = gameBoard[2, 2]
                 = Values.EMPTY;
+            logInfo("SYSTEM", "Init Complete");
         }
 
         private void DisableGame()
         {
+            logInfo("SYSTEM", "Game Area Disabled");
             gameStart = 0;
             grpGamePlay.Enabled = false;
             btnReset.Enabled = false;
@@ -55,6 +61,7 @@ namespace TicTacToe
         }
 
         private void promptReset(){
+            logInfo("SYSTEM", "Init Reset Prompt");
             gameStart = 2;
             grpGamePlay.Enabled = false;
         }
@@ -63,11 +70,13 @@ namespace TicTacToe
         {
             if (AlgorithmCheck.hasWon(Values.X, gameBoard))
             {
+                logInfo("GAME-WIN", "X WON");
                 MessageBox.Show("X has won the game!", "X Won!");
                 promptReset();
             }
             else if (AlgorithmCheck.hasWon(Values.O, gameBoard))
             {
+                logInfo("GAME-WIN", "O WON");
                 MessageBox.Show("O has won the game!", "O Won!");
                 promptReset();
             }
@@ -83,13 +92,31 @@ namespace TicTacToe
         {
             if (isSinglePlayer())
             {
-                //Coming Soon
-                //TODO Create AI for SP
-                lblInstructions.Text = "Coming Soon...";
+                logInfo("GAME", "Single Player Mode");
+                turnNo++;
+                logInfo("GAME", "Incremented Turn No");
+                if (currentPlayer == Values.X)
+                {
+                    //AI's Turn
+                    currentPlayer = Values.AI;
+                    updateTurnDisplay();
+                    grpGamePlay.Enabled = false;
+                    ComputerAI.determineNextMove(gameBoard, lastRow, lastCol, turnNo);
+                    UpdateAIRefreshes();
+                }
+                else
+                {
+                    currentPlayer = Values.X;
+                    grpGamePlay.Enabled = true;
+                    updateTurnDisplay();
+                }
+                
             }
             else
             {
+                logInfo("GAME", "Multiplayer Mode");
                 turnNo++;
+                logInfo("GAME", "Incremented Turn No");
                 if (currentPlayer == Values.X)
                     currentPlayer = Values.O;
                 else
@@ -100,15 +127,26 @@ namespace TicTacToe
                 if (AlgorithmCheck.hasDrawn(turnNo))
                 {
                     MessageBox.Show("This game is a draw!", "Game Drawn");
+                    logInfo("SYSTEM", "Game Drawn");
                     promptReset();
                 }
             }
         }
 
-        private void StartGame()
+        private void StartGameSP()
         {
+            logInfo("SYSTEM", "Game Start (SP)");
+            lblInstructions.Text = "Player Starts First! Turn: 0";
+            currentPlayer = Values.X;
+            turnNo = 0;
+        }
+
+        private void StartGameMultiplayer()
+        {
+            logInfo("SYSTEM", "Game Start (MP)");
             Random random = new Random();
             int whoStartsFirst = random.Next(2);
+            logInfo("Random", "Rolled " + whoStartsFirst);
             //MessageBox.Show(whoStartsFirst + "");
             if (whoStartsFirst == 1)
             {
@@ -128,6 +166,7 @@ namespace TicTacToe
 
         private void ResetGame()
         {
+            logInfo("SYSTEM", "Game Reset");
             InitializeGame();
             DisableGame();
             btnStart.Enabled = true;
@@ -137,26 +176,49 @@ namespace TicTacToe
 
         private void updateTurnDisplay()
         {
-            lblInstructions.Text = "Current Turn: " + currentPlayer + " Turn: " + turnNo;
+            if (isSinglePlayer())
+            {
+                if (currentPlayer == Values.AI)
+                    lblInstructions.Text = "Current Turn: " + currentPlayer + " Turn: " + turnNo;
+                else
+                    lblInstructions.Text = "Current Turn: Player   Turn: " + turnNo;
+            }
+            else
+            {
+                lblInstructions.Text = "Current Turn: " + currentPlayer + " Turn: " + turnNo;
+            }
         }
 
         private void UpdateMove(int row, int col)
         {
             if (checkValid(row, col))
             {
+                logInfo("Player Move", "Turn " + turnNo + ": Placed at " + row + ":" + col);
                 gameBoard[row, col] = currentPlayer;
                 updateButtons();
+                lastCol = col;
+                lastRow = row;
                 checkWon();
             }
         }
 
-        public static void UpdateAI(int row, int col)
+        public static void UpdateAIMove(int row, int col)
         {
+            Form1 tmpFrm = new Form1();
+            tmpFrm.logInfo("AI Move", "Turn " + tmpFrm.turnNo + ": Placed at " + row + ":" + col);
             gameBoard[row, col] = Values.O;
+        }
+
+        private void UpdateAIRefreshes()
+        {
+            logInfo("Refresh AI", "Refreshing AI");
+            updateButtons();
+            checkWon();
         }
 
         private void updateButtons()
         {
+            logInfo("Update Button", "Updating Button");
             r11.Text = gameBoard[0, 0];
             r12.Text = gameBoard[0, 1];
             r13.Text = gameBoard[0, 2];
@@ -166,6 +228,7 @@ namespace TicTacToe
             r31.Text = gameBoard[2, 0];
             r32.Text = gameBoard[2, 1];
             r33.Text = gameBoard[2, 2];
+            logInfo("Update Button", "Update Complete");
         }
 
         private Boolean checkValid(int row, int col){
@@ -179,8 +242,26 @@ namespace TicTacToe
         public static void throwError(String errorMsg)
         {
             MessageBox.Show(errorMsg, "ERROR");
+            Form1 tmpFrm = new Form1();
+            tmpFrm.logError("ERROR", errorMsg);
         }
 
+        /*
+         * Debug Area
+         */
+        public void logInfo(String title, String message)
+        {
+            DateTime now = DateTime.Now;
+            String msg = "[INFO] [" + now + "] " + title + ": " + message;
+            logList.Add(msg);
+        }
+
+        public void logError(String title, String message)
+        {
+            DateTime now = DateTime.Now;
+            String msg = "[ERROR] [" + now + "] " + title + ": " + message;
+            logList.Add(msg);
+        }
 
 
         /*
@@ -199,25 +280,25 @@ namespace TicTacToe
             if (isSinglePlayer())
             {
                 //Single Player
-                /*
                 lblInstructions.Text = "Single Player Mode Selected. Game Starts in 5 seconds...";
                 gameStart = 1;
                 btnStart.Enabled = false;
                 btnReset.Enabled = true;
                 groupSelect.Enabled = false;
-                grpGamePlay.Enabled = true;*/
-                lblInstructions.Text = "Single Player Mode coming soon. Please select another";
+                grpGamePlay.Enabled = true;
+                StartGameSP();
+                //lblInstructions.Text = "Single Player Mode coming soon. Please select another";
             }
             else
             {
-                //Single Player
+                //Multi Player
                 lblInstructions.Text = "Multi Player Mode Selected. Getting who starts first";
                 gameStart = 1;
                 btnStart.Enabled = false;
                 groupSelect.Enabled = false;
                 btnReset.Enabled = true;
                 grpGamePlay.Enabled = true;
-                StartGame();
+                StartGameMultiplayer();
             }
         }
 
