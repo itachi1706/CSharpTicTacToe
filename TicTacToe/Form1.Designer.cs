@@ -48,6 +48,8 @@
             this.groupSelect = new System.Windows.Forms.GroupBox();
             this.grpGamePlay = new System.Windows.Forms.GroupBox();
             this.lblInstructions = new System.Windows.Forms.Label();
+            this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewGameLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.groupSelect.SuspendLayout();
             this.grpGamePlay.SuspendLayout();
@@ -188,7 +190,8 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolsToolStripMenuItem});
+            this.toolsToolStripMenuItem,
+            this.debugToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(323, 24);
@@ -253,6 +256,21 @@
             this.lblInstructions.TabIndex = 16;
             this.lblInstructions.Text = "Press Start Game to Start";
             // 
+            // debugToolStripMenuItem
+            // 
+            this.debugToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.viewGameLogToolStripMenuItem});
+            this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
+            this.debugToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
+            this.debugToolStripMenuItem.Text = "Debug";
+            // 
+            // viewGameLogToolStripMenuItem
+            // 
+            this.viewGameLogToolStripMenuItem.Name = "viewGameLogToolStripMenuItem";
+            this.viewGameLogToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.viewGameLogToolStripMenuItem.Text = "View Game Log";
+            this.viewGameLogToolStripMenuItem.Click += new System.EventHandler(this.viewGameLogToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -299,6 +317,8 @@
         private System.Windows.Forms.GroupBox groupSelect;
         private System.Windows.Forms.GroupBox grpGamePlay;
         private System.Windows.Forms.Label lblInstructions;
+        private System.Windows.Forms.ToolStripMenuItem debugToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem viewGameLogToolStripMenuItem;
     }
 }
 

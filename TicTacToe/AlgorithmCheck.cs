@@ -17,12 +17,11 @@ namespace TicTacToe
 
         public static Boolean hasWon(String value, String[,] gameBoard)
         {
-            Form1 tmpfrm = new Form1();
             Boolean winValue = false;
             gameBoardCheck = gameBoard;
             if (wonVert(value) || wonHorizontal(value) || wonDiagonal(value))
                 winValue = true;
-            tmpfrm.logInfo("WIN-Check", "Has Won Value: " + winValue);
+            LoggingClass.logInfo("WIN-Check", "Has Won Value: " + winValue);
             return winValue;
 
         }
