@@ -53,6 +53,7 @@ namespace TicTacToe
             gameStart = 0;
             grpGamePlay.Enabled = false;
             btnReset.Enabled = false;
+            newGameToolStripMenuItem.Enabled = false;
         }
 
         private Boolean isSinglePlayer()
@@ -285,6 +286,7 @@ namespace TicTacToe
                 gameStart = 1;
                 btnStart.Enabled = false;
                 btnReset.Enabled = true;
+                newGameToolStripMenuItem.Enabled = true;
                 groupSelect.Enabled = false;
                 grpGamePlay.Enabled = true;
                 StartGameSP();
@@ -298,6 +300,7 @@ namespace TicTacToe
                 btnStart.Enabled = false;
                 groupSelect.Enabled = false;
                 btnReset.Enabled = true;
+                newGameToolStripMenuItem.Enabled = true;
                 grpGamePlay.Enabled = true;
                 StartGameMultiplayer();
             }
@@ -360,6 +363,16 @@ namespace TicTacToe
             }
             list.Show();
             MessageBox.Show(msg, "Log");
+        }
+
+        private void newGameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ResetGame();
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
 
 

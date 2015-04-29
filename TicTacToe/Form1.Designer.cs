@@ -45,11 +45,11 @@
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewGameLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupSelect = new System.Windows.Forms.GroupBox();
             this.grpGamePlay = new System.Windows.Forms.GroupBox();
             this.lblInstructions = new System.Windows.Forms.Label();
-            this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewGameLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.groupSelect.SuspendLayout();
             this.grpGamePlay.SuspendLayout();
@@ -210,14 +210,31 @@
             // newGameToolStripMenuItem
             // 
             this.newGameToolStripMenuItem.Name = "newGameToolStripMenuItem";
-            this.newGameToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.newGameToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.newGameToolStripMenuItem.Text = "New Game";
+            this.newGameToolStripMenuItem.Click += new System.EventHandler(this.newGameToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // debugToolStripMenuItem
+            // 
+            this.debugToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.viewGameLogToolStripMenuItem});
+            this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
+            this.debugToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
+            this.debugToolStripMenuItem.Text = "Debug";
+            // 
+            // viewGameLogToolStripMenuItem
+            // 
+            this.viewGameLogToolStripMenuItem.Name = "viewGameLogToolStripMenuItem";
+            this.viewGameLogToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.viewGameLogToolStripMenuItem.Text = "View Game Log";
+            this.viewGameLogToolStripMenuItem.Click += new System.EventHandler(this.viewGameLogToolStripMenuItem_Click);
             // 
             // groupSelect
             // 
@@ -255,21 +272,6 @@
             this.lblInstructions.Size = new System.Drawing.Size(126, 13);
             this.lblInstructions.TabIndex = 16;
             this.lblInstructions.Text = "Press Start Game to Start";
-            // 
-            // debugToolStripMenuItem
-            // 
-            this.debugToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.viewGameLogToolStripMenuItem});
-            this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
-            this.debugToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
-            this.debugToolStripMenuItem.Text = "Debug";
-            // 
-            // viewGameLogToolStripMenuItem
-            // 
-            this.viewGameLogToolStripMenuItem.Name = "viewGameLogToolStripMenuItem";
-            this.viewGameLogToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
-            this.viewGameLogToolStripMenuItem.Text = "View Game Log";
-            this.viewGameLogToolStripMenuItem.Click += new System.EventHandler(this.viewGameLogToolStripMenuItem_Click);
             // 
             // Form1
             // 
