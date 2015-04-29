@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using JR.Utils.GUI.Forms;
 
 namespace TicTacToe
 {
@@ -354,15 +355,12 @@ namespace TicTacToe
 
         private void viewGameLogToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ListBox list = new ListBox();
             ArrayList logList = LoggingClass.getLogList();
             String msg = "";
             foreach (string log in logList){
-                list.Items.Add(log);
                 msg += log + "\n";
             }
-            list.Show();
-            MessageBox.Show(msg, "Log");
+            FlexibleMessageBox.Show(msg, "Log");
         }
 
         private void newGameToolStripMenuItem_Click(object sender, EventArgs e)
