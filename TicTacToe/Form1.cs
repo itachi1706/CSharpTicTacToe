@@ -110,6 +110,14 @@ namespace TicTacToe
                     grpGamePlay.Enabled = true;
                     updateTurnDisplay();
                 }
+
+                //Check drawn
+                if (AlgorithmCheck.hasDrawn(turnNo))
+                {
+                    MessageBox.Show("This game is a draw!", "Game Drawn");
+                    LoggingClass.logInfo("SYSTEM", "Game Drawn");
+                    promptReset();
+                }
                 
             }
             else
