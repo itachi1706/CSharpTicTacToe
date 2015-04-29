@@ -22,6 +22,7 @@ namespace TicTacToe
 
         public static void determineNextMove(string[,] gameBoard, int lastRow, int lastCol, int turn)
         {
+            Form1 tmpfrm = new Form1();
             //Check if first turn and is middle
             if (turn == 1)
             {
@@ -29,14 +30,17 @@ namespace TicTacToe
             }
             else
             {
+                tmpfrm.logInfo("AI", "Check Win");
                 //See if AI can win
                 if (checkForPossibleAIWinOrBlock(gameBoard, Values.O))
                     return;
+                tmpfrm.logInfo("AI", "Check Block");
                 //Check if I can block
                 if (checkForPossibleAIWinOrBlock(gameBoard, Values.X))
                     return;
                 //Randomize
-
+                tmpfrm.logInfo("AI", "Randomize");
+                randomlyChuckValue();
             }
         }
 
