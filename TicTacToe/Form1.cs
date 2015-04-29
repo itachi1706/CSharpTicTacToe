@@ -114,9 +114,16 @@ namespace TicTacToe
                 //Check drawn
                 if (AlgorithmCheck.hasDrawn(turnNo))
                 {
-                    MessageBox.Show("This game is a draw!", "Game Drawn");
-                    LoggingClass.logInfo("SYSTEM", "Game Drawn");
-                    promptReset();
+                    if (gameStart == 2)
+                    {
+                        LoggingClass.logInfo("SYSTEM", "Already prompted Draw Message");
+                    }
+                    else
+                    {
+                        MessageBox.Show("This game is a draw!", "Game Drawn");
+                        LoggingClass.logInfo("SYSTEM", "Game Drawn");
+                        promptReset();
+                    }
                 }
                 
             }
