@@ -11,5 +11,6 @@ namespace TicTacToe
         public static String X { get { return "X"; } }
         public static String O { get { return "O"; } }
         public static String EMPTY { get { return " "; } }
+        public static String AI { get { return "Computer"; } }
     }
 }

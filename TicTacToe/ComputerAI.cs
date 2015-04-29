@@ -18,6 +18,8 @@ namespace TicTacToe
          * 6 7 8
          */
 
+        private static string[,] tmpGameBoard;
+
         public static void determineNextMove(string[,] gameBoard, int lastRow, int lastCol, int turn)
         {
             //Check if first turn and is middle
@@ -28,60 +30,93 @@ namespace TicTacToe
             else
             {
                 //See if AI can win
+                if (checkForPossibleAIWinOrBlock(gameBoard, Values.O))
+                    return;
+                //Check if I can block
+                if (checkForPossibleAIWinOrBlock(gameBoard, Values.X))
+                    return;
+                //Randomize
+
             }
         }
 
-        private static void checkForPossibleAIWin(string[,] gameBoard)
+        private static void randomlyChuckValue()
         {
-            if (gameBoard[0, 0] == Values.O)
+            Random random = new Random();
+            int randomMove, count = 0;
+            while (true)
             {
-                //Possible Game Moves (1,2,3,4,6,8)
-                //Possible Row 1 or Col 1 or Diag 1 win
-                if (gameBoard[0, 1] == Values.O && isValidMove(gameBoard, 2)) makeMove(2);
-                else if (gameBoard[0, 2] == Values.O && isValidMove(gameBoard, 1)) makeMove(1);
-                else if (gameBoard[1, 0] == Values.O && isValidMove(gameBoard, 6)) makeMove(6);
-                else if (gameBoard[2, 0] == Values.O && isValidMove(gameBoard, 3)) makeMove(3);
-                else if (gameBoard[1, 1] == Values.O && isValidMove(gameBoard, 8)) makeMove(8);
-                else if (gameBoard[2, 2] == Values.O && isValidMove(gameBoard, 4)) makeMove(4);
+                randomMove = random.Next(9);
+                if (isValidMove(randomMove))
+                {
+                    makeMove(randomMove);
+                    return;
+                }
+                if (count > 1000){
+                    Form1.throwError("Random Moves unable to generate. Either the RNG gods are against you"
+                        + ", or there is a bug you need to report to the dev.");
+                }
             }
-            else if (gameBoard[0, 1] == Values.O)
-            {
-                //Possible Game Moves (0, 2, 4, 7)
-                if (gameBoard[0, 2] == Values.O && isValidMove(gameBoard, 0)) makeMove(0);
-                else if (gameBoard[0, 0] == Values.O && isValidMove(gameBoard, 2)) makeMove(2);
-                else if (gameBoard[2, 1] == Values.O && isValidMove(gameBoard, 4)) makeMove(4);
-                else if (gameBoard[1, 1] == Values.O && isValidMove(gameBoard, 7)) makeMove(7);
-            }
-            else if (gameBoard[0, 2] == Values.O)
-            {
-                //Possible Game Moves (0,1,4,5,6,8)
-                if (gameBoard[0, 1] == Values.O && isValidMove(gameBoard, 0)) makeMove(0);
-                else if (gameBoard[0, 0] == Values.O && isValidMove(gameBoard, 1)) makeMove(1);
-                else if (gameBoard[2, 0] == Values.O && isValidMove(gameBoard, 4)) makeMove(4);
-                else if (gameBoard[2, 2] == Values.O && isValidMove(gameBoard, 5)) makeMove(5);
-                else if (gameBoard[1, 1] == Values.O && isValidMove(gameBoard, 6)) makeMove(6);
-                else if (gameBoard[1, 2] == Values.O && isValidMove(gameBoard, 8)) makeMove(8);
-            }
-            else if (gameBoard[1, 0] == Values.O)
-            {
+        }
 
-            }
-            else if (gameBoard[1, 1] == Values.O)
-            {
+        private static Boolean checkForPossibleAIWinOrBlock(string[,] gameBoard, String moveVal)
+        {
+            tmpGameBoard = gameBoard;
 
-            }
-            else if (gameBoard[1, 2] == Values.O)
-            {
+            // Check Rows
+            if (checkMatch(0, 1, moveVal) && isValidMove(2)) { makeMove(2); return true; }
+            if (checkMatch(0, 2, moveVal) && isValidMove(1)) { makeMove(1); return true; }
+            if (checkMatch(1, 2, moveVal) && isValidMove(0)) { makeMove(0); return true; }
+            if (checkMatch(3, 4, moveVal) && isValidMove(5)) { makeMove(5); return true; }
+            if (checkMatch(3, 5, moveVal) && isValidMove(4)) { makeMove(4); return true; }
+            if (checkMatch(4, 5, moveVal) && isValidMove(3)) { makeMove(3); return true; }
+            if (checkMatch(6, 7, moveVal) && isValidMove(8)) { makeMove(8); return true; }
+            if (checkMatch(6, 8, moveVal) && isValidMove(7)) { makeMove(7); return true; }
+            if (checkMatch(7, 8, moveVal) && isValidMove(6)) { makeMove(6); return true; }
 
-            }
-            else if (gameBoard[2, 1] == Values.O)
-            {
+            // Check Columns
+            if (checkMatch(0, 3, moveVal) && isValidMove(6)) { makeMove(6); return true; }
+            if (checkMatch(0, 6, moveVal) && isValidMove(3)) { makeMove(3); return true; }
+            if (checkMatch(3, 6, moveVal) && isValidMove(0)) { makeMove(0); return true; }
+            if (checkMatch(1, 4, moveVal) && isValidMove(7)) { makeMove(7); return true; }
+            if (checkMatch(1, 7, moveVal) && isValidMove(4)) { makeMove(4); return true; }
+            if (checkMatch(4, 7, moveVal) && isValidMove(1)) { makeMove(1); return true; }
+            if (checkMatch(2, 5, moveVal) && isValidMove(8)) { makeMove(8); return true; }
+            if (checkMatch(2, 8, moveVal) && isValidMove(5)) { makeMove(5); return true; }
+            if (checkMatch(5, 8, moveVal) && isValidMove(2)) { makeMove(2); return true; }
 
-            }
-            else if (gameBoard[2, 2] == Values.O)
+            // Check Diagonal
+            if (checkMatch(0, 4, moveVal) && isValidMove(8)) { makeMove(8); return true; }
+            if (checkMatch(0, 8, moveVal) && isValidMove(4)) { makeMove(4); return true; }
+            if (checkMatch(4, 8, moveVal) && isValidMove(0)) { makeMove(0); return true; }
+            if (checkMatch(2, 4, moveVal) && isValidMove(6)) { makeMove(6); return true; }
+            if (checkMatch(2, 6, moveVal) && isValidMove(4)) { makeMove(4); return true; }
+            if (checkMatch(4, 6, moveVal) && isValidMove(2)) { makeMove(2); return true; }
+
+            // Cannot Win/Block
+            return false;
+        }
+
+        private static Boolean checkMatch(int gameMove1, int gameMove2, String value)
+        {
+            if (getValueAtSlot(tmpGameBoard, gameMove1) == getValueAtSlot(tmpGameBoard, gameMove2))
             {
-                
+                if (getValueAtSlot(tmpGameBoard, gameMove1) == value)
+                    return true;
             }
+            return false;
+        }
+
+        private static String getValueAtSlot(string[,] gameBoard, int gameMove)
+        {
+            int row = getRow(gameMove);
+            int col = getCol(gameMove);
+            return gameBoard[row, col];
+        }
+
+        private static String getValueAtSlot(string[,] gameBoard, int row, int col)
+        {
+            return gameBoard[row, col];
         }
 
         private static void firstMove(string[,] gameBoard, int lastRow, int lastCol)
@@ -174,6 +209,17 @@ namespace TicTacToe
             return -1;
         }
 
+        private static Boolean isValidMove(int nextMove)
+        {
+            int row = getRow(nextMove);
+            int col = getCol(nextMove);
+            if (row == -1 || col == -1)
+            {
+                return false;
+            }
+            return tmpGameBoard[row, col] == Values.EMPTY;
+        }
+
         private static Boolean isValidMove(string[,] gameBoard, int nextMove)
         {
             int row = getRow(nextMove);
@@ -225,15 +271,15 @@ namespace TicTacToe
         {
             switch (nextMove)
             {
-                case 0: Form1.UpdateAI(0, 0); break;
-                case 1: Form1.UpdateAI(0, 1); break;
-                case 2: Form1.UpdateAI(0, 2); break;
-                case 3: Form1.UpdateAI(1, 0); break;
-                case 4: Form1.UpdateAI(1, 1); break;
-                case 5: Form1.UpdateAI(1, 2); break;
-                case 6: Form1.UpdateAI(2, 0); break;
-                case 7: Form1.UpdateAI(2, 1); break;
-                case 8: Form1.UpdateAI(2, 2); break;
+                case 0: Form1.UpdateAIMove(0, 0); break;
+                case 1: Form1.UpdateAIMove(0, 1); break;
+                case 2: Form1.UpdateAIMove(0, 2); break;
+                case 3: Form1.UpdateAIMove(1, 0); break;
+                case 4: Form1.UpdateAIMove(1, 1); break;
+                case 5: Form1.UpdateAIMove(1, 2); break;
+                case 6: Form1.UpdateAIMove(2, 0); break;
+                case 7: Form1.UpdateAIMove(2, 1); break;
+                case 8: Form1.UpdateAIMove(2, 2); break;
             }
         }
     }
